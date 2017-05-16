@@ -87,3 +87,7 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# 事后取消的一些文件夹
+.idea
+.gitignore
