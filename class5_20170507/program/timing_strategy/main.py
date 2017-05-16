@@ -6,10 +6,13 @@ date: 2017年05月17日
 """
 
 import pandas as pd
+# import Signals
+
+#　目前遇到的问题就是导入自己的文件夹的时候不正确
 
 from program import Functions  # 或者 import program.Functions
 
-pd.set_option('expand_frame_repr', False) # 当列太多时不换行
+pd.set_option('expand_frame_repr', False)　# 当列太多时不换行
 
 
 # ===== 第一个模块: 数据准备
