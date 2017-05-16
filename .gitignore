@@ -89,5 +89,5 @@ ENV/
 .ropeproject
 
 # 事后取消的一些文件夹
-.idea
+.idea/
 .gitignore
