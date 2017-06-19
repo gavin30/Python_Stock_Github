@@ -3,14 +3,19 @@ import scrapy
 import re
 from scrapy.selector import Selector
 from news.items import NewsItem
-from scrapy.contrib.linkextractors import LinkExtractor
-from scrapy.contrib.spiders import CrawlSpider,Rule
+# from scrapy.contrib.linkextractors import LinkExtractor
+from scrapy.linkextractors import LinkExtractor
+
+# from scrapy.contrib.spiders import CrawlSpider,Rule
+from scrapy.spiders import CrawlSpider,Rule
+
 class ExampleSpider(CrawlSpider):
     name = "news"
     allowed_domains = ["money.163.com"]
     start_urls = ['http://money.163.com/']
     rules=(
-        Rule(LinkExtractor(allow=r"/17/06\d+/\d+/*"),
+        # Rule(LinkExtractor(allow=r"/17/06\d+/\d+/*"),
+        Rule(LinkExtractor(allow=r"/17/\d+/\d+/*"),
         callback="parse_news",follow=True),
     )
     def printcn(suni):
