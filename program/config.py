@@ -20,6 +20,6 @@ input_data_path = os.path.abspath(os.path.join(root_path, 'data', 'input_data'))
 output_data_path = os.path.abspath(os.path.join(root_path, 'data', 'output_data'))
 
 # # 当前路径
-# print os.path.abspath('.')
+print os.path.abspath('.')
 # # 父辈路径
-# print os.path.abspath('..')
+print os.path.abspath('..')

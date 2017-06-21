@@ -8,17 +8,19 @@
 3.　推荐股票并发送邮件或者短信
 
 
-## python version:
+## python version: 3.5
 
->　开始使用的是 Python2.7, 为了结合 Scrapy, 修改成了 Python 3.5, 主要修改点包括:
+> 开始使用的是 Python2.7,
+> 为了结合 Scrapy, 修改成了 Python 3.5, 主要修改点包括:
 
 1. Print()
 2. reload 函数应该是跟编码有关,猜测。注释掉即可
 3. 安装相关 Packages
 
-## the　big　problems:
+## the　big　problems: 基本解决方案都在对应的函数下面,重点问题会拿到这里,保持代码的纯净
 
->　基本解决方案都在对应的函数下面,重点问题会拿到这里,保持代码的纯净
+1. 只能在 Run 里面执行代码，调用 Moudle。用 Terminal 就会报错，还未解决
+2.
 
 ##　to　do　lists:　还要去实现的一些想法
 
@@ -34,7 +36,23 @@ import re
 from datetime import datetime, timedelta
 from dateutil.parser import parse
 # import pandas as pd
+
+# 解决路径问题
 import sys
+sys.path.append('/Users/davidfnck/Downloads/Python_Stock_Github/')
+
+from functools import wraps
+
+# reload(sys)
+# sys.setdefaultencoding('utf8')
+
+# reload(sys)  # 仅限Python 2.7
+# sys.setdefaultencoding("utf-8")  # 仅限Python 2.7
+
+# setence=sys.argv[1]
+
+
+
 # from sqlalchemy import create_engine, MetaData, Table, select
 
 
@@ -81,13 +99,18 @@ def delete_mongo(db, collection, query={}, host='localhost', port=27017, usernam
 
 delete_mongo('NewsDB','news',{},'127.0.0.1',27017)
 
-print('1')
-exit()
+# print('1')
+# exit()
 
 # 运行爬虫 Scrapy news
-from news import ProcessRun
-ProcessRun
+# 问题：ImportError: No module named ProcessRun
+# 这个该如何解决?
+import news
+# from news.entrypoint import GOGO
+# GOGO()
 
+from ProcessRun import ProcessRun
+ProcessRun()
 
 # 读取数据
 df = read_mongo('NewsDB','news',{},'127.0.0.1',27017)
@@ -149,17 +172,9 @@ except:
     print('Something Wrong')  # Python3.5
 
 
-import sys
-from functools import wraps
-
-# reload(sys)  # 仅限Python 2.7
-# sys.setdefaultencoding("utf-8")  # 仅限Python 2.7
-
-# setence=sys.argv[1]
-
 # 基础词库以 Sogou 股票词为基础
 stocks = ''
-with open('/Users/davidfnck/Downloads/Python_Stock_Github/news_anlysis/stock_data/allstocks.txt','r') as f:
+with open('/Users/davidfnck/Downloads/Python_Stock_Github/news_anlysis/stock_data/allstocks.txt','r',encoding='utf8') as f:
     for line in f:
         stocks += line
         # print(stocks)
@@ -170,6 +185,8 @@ jieba.set_dictionary('/Users/davidfnck/Downloads/Python_Stock_Github/news_anlysi
 x = -1
 while x < df.index[-1]:
     for content in df['news_body']:
+        print(content)
+        exit()
         x = x + 1
         try:
             tags = jieba.analyse.extract_tags(content, 1)
@@ -181,5 +198,10 @@ while x < df.index[-1]:
         else:
             for i in tags:
                 if i in stocks:
-                    # print i,df['news_url'][x]
-                    print(i,df['news_url'][x])
+                    try:
+                        # print i,df['news_url'][x]
+                        print(x,i,df['news_url'][x])
+                    except:
+                        # print 'Something Wrong'
+                        print(x,i,'Something Wrong')  # Python3.5
+
